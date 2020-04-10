@@ -23,7 +23,7 @@ When compiled and run, it will open a native window with title bar and controls 
 
 ## Author
 
-**Phillip Lenhardt** - [philen](https://bitbucket.org/philen)
+**Phillip Lenhardt** - [philen](https://github.com/philen)
 
 ## License
 
