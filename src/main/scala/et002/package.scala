@@ -15,7 +15,7 @@ package object et002 {
 
   /** requires an execution context where imported */
   val defaultAsyncHandler: Callback[Throwable, Unit] = new Callback[Throwable, Unit] {
-    def onSuccess(value: Unit): Unit = Unit
+    def onSuccess(value: Unit): Unit = ()
     def onError(e: Throwable): Unit = {
       println("defaultAsyncHandler caught an exception:")
       e.printStackTrace()
