@@ -17,11 +17,10 @@ object Loader {
   }
 
   def load(ui: UIListener): Lwjgl3ApplicationConfiguration = {
-    appChannel.take.runAsync { result =>
-      result match {
-        case Left(err) => throw err
-        case Right(app) => app.postRunnable(() => ui.replace(new LoadingScreen()))
-    }}
+    appChannel.take.runAsync {
+      case Left(err) => throw err
+      case Right(app) => app.postRunnable(() => ui.replace(new LoadingScreen()))
+    }
 
     // TODO load from file in a Task
     new Lwjgl3ApplicationConfiguration() {
