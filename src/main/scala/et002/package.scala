@@ -1,15 +1,13 @@
 import com.badlogic.gdx.graphics.{Color, GL20}
-import com.badlogic.gdx.{Application, Gdx, Screen}
-import monix.catnap.MVar
+import com.badlogic.gdx.{Gdx, Screen}
 import monix.eval.Task
 import monix.execution.Callback
+
 
 import scala.concurrent.duration.FiniteDuration
 
 
 package object et002 {
-
-  type AppChannel = MVar[Task, Application]
 
   trait UIScreen extends Screen
 

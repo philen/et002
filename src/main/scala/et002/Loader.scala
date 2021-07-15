@@ -1,6 +1,6 @@
 package et002
 
-import com.badlogic.gdx.{Application, Gdx}
+import com.badlogic.gdx.Application
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
 import com.badlogic.gdx.graphics.glutils.HdpiMode
 import monix.catnap.MVar
@@ -10,10 +10,10 @@ import monix.execution.Scheduler.Implicits.global
 
 object Loader {
 
+  type AppChannel = MVar[Task, Application]
   private val appChannel: AppChannel = MVar[Task].empty[Application]().runSyncUnsafe()
-
-  def register(app: Application): Unit = {
-    appChannel.put(Gdx.app).runAsync(defaultAsyncHandler)
+  def ready(app: Application): Unit = {
+    appChannel.put(app).runAsync(defaultAsyncHandler)
   }
 
   def load(ui: UIListener): Lwjgl3ApplicationConfiguration = {

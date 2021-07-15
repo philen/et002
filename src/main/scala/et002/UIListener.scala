@@ -1,14 +1,14 @@
 package et002
 
-import com.badlogic.gdx.{ApplicationListener, Gdx}
+import com.badlogic.gdx.{Application, ApplicationListener, Gdx}
 
 
 /** Scala reimplementation of [[com.badlogic.gdx.Game]] */
-class UIListener extends ApplicationListener {
-  var screen: Option[UIScreen] = None
+class UIListener(ready: Application => Unit) extends ApplicationListener {
+  private var screen: Option[UIScreen] = None
 
   def create(): Unit = {
-    Loader.register(Gdx.app)
+    ready(Gdx.app)
   }
 
   def resize(width: Int, height: Int): Unit = {
@@ -31,7 +31,6 @@ class UIListener extends ApplicationListener {
     screen.foreach(_.hide())
     screen.foreach(_.dispose())
   }
-
 
   def replace(s: UIScreen): Unit = {
     screen.foreach(_.dispose())
