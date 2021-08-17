@@ -7,18 +7,18 @@ import monix.catnap.MVar
 import monix.eval.Task
 import monix.execution.Scheduler.Implicits.global
 
-
 object Loader {
 
   type AppChannel = MVar[Task, Application]
-  private val appChannel: AppChannel = MVar[Task].empty[Application]().runSyncUnsafe()
+  private val appChannel: AppChannel =
+    MVar[Task].empty[Application]().runSyncUnsafe()
   def ready(app: Application): Unit = {
     appChannel.put(app).runAsync(defaultAsyncHandler)
   }
 
   def load(ui: UIListener): Lwjgl3ApplicationConfiguration = {
     appChannel.take.runAsync {
-      case Left(err) => throw err
+      case Left(err)  => throw err
       case Right(app) => app.postRunnable(() => ui.replace(new LoadingScreen()))
     }
 

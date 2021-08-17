@@ -2,7 +2,6 @@ package et002
 
 import com.badlogic.gdx.{Application, ApplicationListener, Gdx}
 
-
 /** Scala reimplementation of [[com.badlogic.gdx.Game]] */
 class UIListener(ready: Application => Unit) extends ApplicationListener {
   private var screen: Option[UIScreen] = None

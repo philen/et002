@@ -2,7 +2,6 @@ package et002
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
 
-
 object Main extends App {
   try {
     val ui = new UIListener(Loader.ready)

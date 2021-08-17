@@ -3,39 +3,39 @@ import com.badlogic.gdx.{Gdx, Screen}
 import monix.eval.Task
 import monix.execution.Callback
 
-
 import scala.concurrent.duration.FiniteDuration
-
 
 package object et002 {
 
   trait UIScreen extends Screen
 
   /** requires an execution context where imported */
-  val defaultAsyncHandler: Callback[Throwable, Unit] = new Callback[Throwable, Unit] {
-    def onSuccess(value: Unit): Unit = ()
-    def onError(e: Throwable): Unit = {
-      println("defaultAsyncHandler caught an exception:")
-      e.printStackTrace()
+  val defaultAsyncHandler: Callback[Throwable, Unit] =
+    new Callback[Throwable, Unit] {
+      def onSuccess(value: Unit): Unit = ()
+      def onError(e: Throwable): Unit = {
+        println("defaultAsyncHandler caught an exception:")
+        e.printStackTrace()
+      }
     }
-  }
 
   implicit class RetryableTask[A](val task: Task[A]) extends AnyVal {
+
     /** Add retries with exponential back-off to a Task
-     * @param retries number of retries remaining
-     * @param delay delay for the next retry
-     * @return
-     */
-    def addRetries(retries: Int,
-                   delay: FiniteDuration): Task[A] = {
+      * @param retries number of retries remaining
+      * @param delay delay for the next retry
+      * @return
+      */
+    def addRetries(retries: Int, delay: FiniteDuration): Task[A] = {
       task.onErrorHandleWith {
         case ex: Exception =>
           if (retries > 0)
-          // Recursive call, it's OK as Monix is stack-safe
-          task.addRetries(retries - 1, delay * 2)
-            .delayExecution(delay)
+            // Recursive call, it's OK as Monix is stack-safe
+            task
+              .addRetries(retries - 1, delay * 2)
+              .delayExecution(delay)
           else
-          Task.raiseError(ex)
+            Task.raiseError(ex)
       }
     }
   }
