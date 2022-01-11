@@ -2,7 +2,7 @@ name := "et002"
 
 version := "0.2"
 
-scalaVersion := "2.13.6"
+scalaVersion := "2.13.7"
 
 libraryDependencies ++= Seq(
   "com.badlogicgames.gdx" % "gdx-backend-lwjgl3" % "1.10.0",
